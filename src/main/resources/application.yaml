@@ -1,0 +1,78 @@
+spring.application.name: dev-interview-kafkaspring
+
+spring.kafka.streams.bootstrap-servers: localhost:9092
+
+spring.kafka.streams.binder.brokers.configuration.schema.registry.url: http://localhost:8081
+
+spring.kafka.streams.binder.configuration.state.dir: state-store
+
+spring.kafka.client-id: stream-client
+
+spring.cloud.stream.binder.brokers: localhost:9092
+
+spring.kafka.streams.application-id: dev-stream-join
+
+spring.cloud.stream.binder.configuration.schema.registry.url: http://localhost:8081
+
+spring.cloud.stream.bindings.customer-in-0.destination: Customer
+spring.cloud.stream.bindings.customer-out-0.destination: CustomerRefined
+spring.cloud.stream.bindings.customerBalanceProcess-in-0.destination: Balance
+spring.cloud.stream.bindings.customerBalanceProcess-out-0.destination: CustomerBalance
+#spring.cloud.stream.bindings.customerBalanceProcess-out-1.destination: BalanceError
+
+spring.kafka.streams.binder.bindings:
+  customer-in-0:
+    consumer:
+      configuration:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+    customer-out-0:
+          default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+          default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+    customerBalanceProcess-in-0:
+      consumer:
+        configuration:
+          default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+          default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+    customerBalanceProcess-out-0:
+      producer:
+        configuration:
+          default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+          default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+          commit.interval.ms: 1000
+          processing.guarantee: exactly_once
+
+#    customerBalanceProcess-out-1:
+#      producer:
+#        configuration:
+#          default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#          default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+#          commit.interval.ms: 1000
+#          processing.guarantee: exactly_once
+
+
+spring.output.ansi.enabled: ALWAYS
+
+logging.pattern.console: "%clr(%d{HH:mm:ss.SSS}){blue} %clr(---){faint} %clr([%15.15t]){yellow} %clr(:){red} %clr(%m){faint}%n"
+
+management.endpoints.web.exposure.include: "*"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
